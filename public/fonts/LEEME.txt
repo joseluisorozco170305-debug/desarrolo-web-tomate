@@ -1,0 +1,4 @@
+Coloca aquí el archivo de la tipografía Ahsing con alguno de estos nombres:
+  Ahsing.woff2  (ideal)  |  Ahsing.woff  |  Ahsing.ttf  |  Ahsing.otf
+Mientras no exista, la página usa Abril Fatface como respaldo.
+Revisa la licencia de la fuente: algunas son gratis solo para uso personal.
