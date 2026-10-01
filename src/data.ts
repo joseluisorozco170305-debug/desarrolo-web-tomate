@@ -74,5 +74,5 @@ export type Proyecto = { nombre: string; descripcion: string; url: string };
 
 export const proyectos: Proyecto[] = [
   { nombre: "Charolas Locas", descripcion: "menú y pedidos por WhatsApp", url: "https://charolas-locas.vercel.app/" },
-  { nombre: "Dalto Piercing", descripcion: "joyería y perforaciones con espacio 3D", url: "https://dalto-piercer-green.vercel.app/" },
+  { nombre: "Dalto Piercing", descripcion: "joyería y perforaciones con menu interactivo", url: "https://dalto-piercer-green.vercel.app/" },
 ];
