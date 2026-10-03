@@ -9,7 +9,7 @@ const preguntas = [
   },
   {
     q: "¿Qué cubre la garantía de 1 mes?",
-    a: "Después de publicar tu sitio tienes un mes para pedir correcciones menores y detalles. Los cambios de formato, las funciones nuevas o nueva paleta de colores se cotizan aparte.",
+    a: "Después de publicar tu sitio tienes un mes para pedir correcciones menores y detalles. Los cambios de formato, las funciones nuevas o los muchos colores se cotizan aparte.",
   },
   {
     q: "¿Para qué es la mensualidad?",

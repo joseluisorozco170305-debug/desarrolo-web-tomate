@@ -187,3 +187,8 @@ h1, h2, .tier h3, .ejemplos-titulo {
 .foot-links a:hover { text-decoration: underline; }
 .foot-ig { color: var(--gold); font-weight: 600; }
 @media (max-width: 480px) { .wa-extra { display: none; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.eslogan { width: 100%; max-width: 70rem; margin-inline: auto; }
+.eslogan-linea.uno { height: clamp(7rem, 13vw, 11rem); }
+.eslogan-linea.dos { height: 5.2rem; }

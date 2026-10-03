@@ -1,5 +1,6 @@
 import { INSTAGRAM_URL, INSTAGRAM_USUARIO, proyectos, WHATSAPP } from "./data";
 import Paquetes from "./Paquetes";
+import Eslogan from "./Eslogan";
 import Faq from "./Faq";
 import Formulario from "./Formulario";
 
@@ -27,7 +28,7 @@ export default function App() {
         <a className="brand" href="#inicio">
           <img src="/logo-tomate.png" alt="Tomate, desarrollo web" />
         </a>
-        <a className="btn btn-sky" href={wa("Hola, quiero cotizar un sitio web.")} aria-label="Cotiza por WhatsApp">
+        <a className="btn btn-sky" href={wa("Hola, quiero cotizar una página web.")} aria-label="Cotiza por WhatsApp">
           <IconoChat />
           <span>Cotiza<span className="wa-extra"> por WhatsApp</span></span>
         </a>
@@ -35,7 +36,7 @@ export default function App() {
 
       <main id="inicio">
         <section className="hero">
-          <h1>Tu marca en cada click</h1>
+          <Eslogan />
           <p>
             Creamos tu página web a tu estilo y a la medida de tu negocio.
             Ayudamos a emprendimientos y negocios locales a llevar mejor
@@ -76,7 +77,7 @@ export default function App() {
         <Formulario />
       </main>
 
-      <a className="flotante" href={wa("Hola, quiero cotizar un sitio web.")} aria-label="Escríbenos por WhatsApp">
+      <a className="flotante" href={wa("Hola, quiero cotizar una página web.")} aria-label="Escríbenos por WhatsApp">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
           <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.6A8 8 0 1 1 21 12z" />
         </svg>
