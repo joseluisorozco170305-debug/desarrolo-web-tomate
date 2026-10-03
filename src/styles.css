@@ -192,3 +192,26 @@ h1, h2, .tier h3, .ejemplos-titulo {
 .eslogan { width: 100%; max-width: 70rem; margin-inline: auto; }
 .eslogan-linea.uno { height: clamp(7rem, 13vw, 11rem); }
 .eslogan-linea.dos { height: 5.2rem; }
+
+/* Crossfade entre pasos del formulario */
+.formulario .pasos { display: grid; }
+.formulario .panel { grid-area: 1 / 1; display: grid; gap: 1.1rem; align-content: start; }
+.formulario .panel.sale { animation: fundido-sale 0.3s ease both; pointer-events: none; }
+.formulario .panel.entra.anima { animation: fundido-entra 0.3s ease both; }
+@keyframes fundido-entra { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fundido-sale { from { opacity: 1; } to { opacity: 0; } }
+
+/* Magnificación de las tarjetas de paquetes */
+.tier {
+  position: relative;
+  transform: scale(var(--escala, 1));
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  box-shadow: 0 calc((var(--escala, 1) - 1) * 240px) calc((var(--escala, 1) - 1) * 480px) rgba(23, 23, 33, 0.28);
+}
+.tier:has(:focus-visible) { --escala: 1.03; }
+
+@media (prefers-reduced-motion: reduce) {
+  .formulario .panel.sale, .formulario .panel.entra.anima { animation: none; }
+  .tier { transition: none; }
+  .tier:has(:focus-visible) { --escala: 1; }
+}

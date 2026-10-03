@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { paquetes, WHATSAPP } from "./data";
 
 const mxn = (n: number) => `$${n.toLocaleString("es-MX")}`;
@@ -27,8 +27,24 @@ const inicial = {
 
 export default function Formulario() {
   const [paso, setPaso] = useState(0);
+  const [saliente, setSaliente] = useState<number | null>(null);
+  const [anima, setAnima] = useState(false);
   const [d, setD] = useState(inicial);
   const [error, setError] = useState("");
+  const temporizador = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(temporizador.current), []);
+
+  // Cambia de paso con crossfade: el paso anterior se desvanece mientras entra el nuevo
+  const irA = (n: number) => {
+    window.clearTimeout(temporizador.current);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setSaliente(paso);
+      setAnima(true);
+      temporizador.current = window.setTimeout(() => setSaliente(null), 300);
+    }
+    setPaso(n);
+  };
 
   const set = (k: keyof typeof inicial, v: string) => setD({ ...d, [k]: v });
   const alternar = (n: string) =>
@@ -53,7 +69,7 @@ export default function Formulario() {
     setError(msg);
     if (msg) return;
     if (paso < PASOS.length - 1) {
-      setPaso(paso + 1);
+      irA(paso + 1);
       return;
     }
     const necesita = [...d.necesidades, d.extra.trim()].filter(Boolean).join(", ");
@@ -78,30 +94,9 @@ export default function Formulario() {
     { valor: "", detalle: "Te ayudamos a elegir" },
   ];
 
-  return (
-    <section className="formulario" id="formulario">
-      <h2>Cuéntanos tu idea</h2>
-      <p className="lead">
-        Llena esto y se envía por WhatsApp. Con tus respuestas diseñamos tu página y te la mostramos antes de publicarla.
-      </p>
-
-      <div className="cuerpo">
-        <p className="paso-texto">
-          Paso {paso + 1} de {PASOS.length}: {PASOS[paso]}
-        </p>
-        <div
-          className="progreso"
-          role="progressbar"
-          aria-label="Progreso del formulario"
-          aria-valuemin={1}
-          aria-valuemax={PASOS.length}
-          aria-valuenow={paso + 1}
-        >
-          <span style={{ width: `${((paso + 1) / PASOS.length) * 100}%` }} />
-        </div>
-
-        <form onSubmit={enviar} noValidate>
-          {paso === 0 && (
+  const renderPaso = (n: number): ReactNode => (
+    <>
+          {n === 0 && (
             <>
               <label>
                 Tu nombre
@@ -118,7 +113,7 @@ export default function Formulario() {
             </>
           )}
 
-          {paso === 1 && (
+          {n === 1 && (
             <>
               <fieldset>
                 <legend>Paquete que te interesa</legend>
@@ -152,7 +147,7 @@ export default function Formulario() {
             </>
           )}
 
-          {paso === 2 && (
+          {n === 2 && (
             <>
               <label>
                 Colores o estilo que te gustan
@@ -165,12 +160,48 @@ export default function Formulario() {
               <p className="nota-form">Al enviar se abre WhatsApp con tus respuestas ya escritas.</p>
             </>
           )}
+    </>
+  );
+
+  return (
+    <section className="formulario" id="formulario">
+      <h2>Cuéntanos tu idea</h2>
+      <p className="lead">
+        Llena esto y se envía por WhatsApp. Con tus respuestas diseñamos tu página y te la mostramos antes de publicarla.
+      </p>
+
+      <div className="cuerpo">
+        <p className="paso-texto">
+          Paso {paso + 1} de {PASOS.length}: {PASOS[paso]}
+        </p>
+        <div
+          className="progreso"
+          role="progressbar"
+          aria-label="Progreso del formulario"
+          aria-valuemin={1}
+          aria-valuemax={PASOS.length}
+          aria-valuenow={paso + 1}
+        >
+          <span style={{ width: `${((paso + 1) / PASOS.length) * 100}%` }} />
+        </div>
+
+        <form onSubmit={enviar} noValidate>
+          <div className="pasos">
+            {saliente !== null && saliente !== paso && (
+              <div className="panel sale" aria-hidden="true" {...{ inert: "" }}>
+                {renderPaso(saliente)}
+              </div>
+            )}
+            <div key={paso} className={`panel entra${anima ? " anima" : ""}`}>
+              {renderPaso(paso)}
+            </div>
+          </div>
 
           {error && <p className="error" role="alert">{error}</p>}
 
           <div className="acciones">
             {paso > 0 && (
-              <button type="button" className="btn btn-ghost" onClick={() => { setError(""); setPaso(paso - 1); }}>
+              <button type="button" className="btn btn-ghost" onClick={() => { setError(""); irA(paso - 1); }}>
                 Atrás
               </button>
             )}
